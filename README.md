@@ -1,67 +1,168 @@
 # SimpleStart
 
-A sleek, single-page browser start dashboard blending Helium's elegant, 3D dithered logo with SimplePage's link management, favicon pipeline, and minimalist settings.
+A clean, minimal browser start page that mixes **Helium's visual style** with **SimplePage's link management**.
+
+SimpleStart gives you a lightweight new-tab dashboard with a spinning dithered logo, a big clock, quick-access links, favicons, and a small settings panel. Basically, your browser's new tab gets to stop looking like it was designed in 2007.
+
+## Download
+
+Download the latest release, extract it, and open `index.html`.
+
+You can also run it locally with a simple static server:
+
+```bash
+python -m http.server 8080 --directory ./helium-simplepage
+```
+
+Then open `http://localhost:8080` in your browser.
+
+### Chrome Extension
+
+1. Open `chrome://extensions`
+2. Enable **Developer mode**
+3. Click **Load unpacked**
+4. Select the SimpleStart directory
+5. Open a new tab
+
+SimpleStart should now replace your default new-tab page.
 
 ---
 
-## Design & Architecture
+## Features
 
-### 1. Core Structure
-- **Background**: Indigo radial-to-linear gradient (`--accent: #152671` to `--accent-light: #5669bd`).
-- **Typography**: Geometric *Instrument Sans* for headers and time.
-- **Logo**: Lightweight WebGL spinning dither spindle with real-time shaders.
-- **Clock**: Large, pulsing, localized date and time display.
-
-### 2. Functionality & Styling
-- **Links & Quick Access**: Rendered in Helium's `#link-container` in horizontal/vertical layouts.
-- **Styling**: Crisp *JetBrains Mono* / *Courier* for links and controls; underlined, high-contrast UI.
-- **Favicon Management**: Automatic high-res favicon with fallback, cached via `localStorage`.
-- **Settings Panel**: Fixed top-right toggle revealing a dark-control window with:
-  - Favicon toggle
-  - Layout orientation
-  - Text and icon alignment
-  - Inline link deletion and URL addition
-  - Factory reset
-
-### 3. Visual Integration
-- **Dither Divider**: 2px gradient beneath the clock connects Helium’s smooth visuals with SimplePage’s monospaced links.
-- **Shadow & Transition**: Settings window casts a dithered shadow; opening smoothly shifts layout to prevent overlap.
+- **Minimal start page** with a clean, distraction-free layout
+- **Spinning dithered WebGL logo** inspired by Helium
+- **Large live clock** with localized date and time
+- **Quick-access links** that can be arranged horizontally or vertically
+- **Automatic favicons** with high-resolution support and fallback handling
+- **Local favicon caching** using `localStorage`
+- **Customizable settings panel**
+- Toggle favicons on or off
+- Change link layout orientation
+- Adjust text and icon alignment
+- Add new links directly from the settings panel
+- Delete links without editing any files
+- **Factory reset** to restore the default configuration
+- Responsive layout that adapts to different screen sizes
+- Everything runs locally with no complicated backend
 
 ---
 
-## Directory Layout
+## Design
 
+SimpleStart is built around two ideas: **Helium's visuals** and **SimplePage's practicality**.
 
+### Background
+
+The page uses an indigo gradient built around two main colors:
+
+```css
+--accent: #152671;
+--accent-light: #5669bd;
+```
+
+The result is a soft gradient background that gives the page some depth without turning it into a Dribbble crime scene.
+
+### Typography
+
+The main interface uses **Instrument Sans** for headings, the clock, and larger UI elements.
+
+Links and controls use **JetBrains Mono** for a more technical, terminal-like feel.
+
+### Logo
+
+The centerpiece is a lightweight WebGL logo with a rotating, dithered spindle effect.
+
+The logo is rendered in real time using shaders rather than being a static image, keeping the visual effect smooth while staying relatively lightweight.
+
+### Clock
+
+The clock is intentionally large and prominent, displaying the current localized date and time.
+
+A subtle pulse animation keeps it from feeling completely static.
+
+### Links
+
+Links are displayed inside the main `#link-container`.
+
+They can be arranged horizontally or vertically depending on the selected layout, with favicons displayed alongside the link names when enabled.
+
+### Divider
+
+A small 2px gradient divider sits underneath the clock.
+
+It's a tiny detail, but it helps separate the smooth Helium-inspired section from the more utilitarian monospace link area.
+
+---
+
+## Settings
+
+The settings button sits in the top-right corner and opens a compact control panel.
+
+From there you can:
+
+- Toggle favicons
+- Change the link orientation
+- Change text/icon alignment
+- Add links
+- Remove existing links
+- Reset everything to the default configuration
+
+Settings are stored locally, so your configuration stays around when you reopen the page.
+
+---
+
+## Project Structure
+
+```text
 helium-simplepage/
-├── index.html                # Markup
+├── index.html
 ├── assets/
-│   ├── favicon.svg           # Helium favicon
+│   ├── favicon.svg
 │   ├── css/
-│   │   └── style.css         # Stylesheet
+│   │   └── style.css
 │   ├── fonts/
 │   │   ├── instrument-sans-*.woff2
 │   │   └── jetbrains-mono-*.woff2
 │   ├── icons/
-│   │   └── fmhy.png          # SimplePage icon
+│   │   └── fmhy.png
 │   └── js/
-│       ├── config.js         # Configurations
-│       └── app.js            # Main scripts (WebGL, clock, links, settings)
+│       ├── config.js
+│       └── app.js
 └── README.md
+```
 
+### Main files
+
+**`index.html`**  
+Contains the page structure and UI elements.
+
+**`style.css`**  
+Handles the layout, typography, gradients, animations, settings panel, and responsive styling.
+
+**`config.js`**  
+Contains the default configuration and link settings.
+
+**`app.js`**  
+Handles the clock, links, favicon system, settings, WebGL logo, local storage, and other interactive features.
 
 ---
 
-## Usage
+## Tech
 
-Open `index.html` in any modern browser or serve via static server:
+SimpleStart is intentionally lightweight.
 
-bash
-# Using Python:
-python -m http.server 8080 --directory ./helium-simplepage
+- HTML
+- CSS
+- JavaScript
+- WebGL
+- LocalStorage
+- WOFF2 fonts
 
+No framework or build system is required. Clone it, edit it, open it. Humanity survives another npm install.
 
-### Chrome Extension (`simplepage`)
-1. Go to `chrome://extensions`
-2. Enable **Developer mode**
-3. Click **Load unpacked** and select this directory
-4. Open a new tab — SimplePage loads automatically!
+---
+
+## License
+
+See the repository for licensing information and attribution.
