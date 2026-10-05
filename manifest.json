@@ -1,13 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "simplepage",
+  "name": "SimpleStart",
   "version": "1.0.0",
-  "description": "A minimalist start page with a link list, favicon cache, and instant settings.",
+  "description": "A really cool startpage, with a shit-ton of features.",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
   "action": {
-    "default_title": "simplepage",
+    "default_title": "simplestart",
     "default_icon": {
       "16": "assets/icons/icon-16.png",
       "48": "assets/icons/icon-48.png",
