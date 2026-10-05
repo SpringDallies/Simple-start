@@ -1,13 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-    <!-- Transparent "Helium X" - matching our 3D Logo spindle -->
-    <g transform="translate(50,50)">
-        <g stroke="white" stroke-width="12" stroke-linecap="round">
-            <line x1="-35" y1="0" x2="35" y2="0" transform="rotate(0)" />
-            <line x1="-35" y1="0" x2="35" y2="0" transform="rotate(45)" />
-            <line x1="-35" y1="0" x2="35" y2="0" transform="rotate(90)" />
-            <line x1="-35" y1="0" x2="35" y2="0" transform="rotate(135)" />
-        </g>
-        <!-- Subtle Glow Core -->
-        <circle r="10" fill="#afbeff" opacity="0.9" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:affinity="https://www.affinity.studio/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1.25,0,0,0.95,-6.25,2.5)">
+        <path d="M45,0C49.415,0 53,4.717 53,10.526L53,89.474C53,95.283 49.415,100 45,100C40.585,100 37,95.283 37,89.474L37,10.526C37,4.717 40.585,0 45,0Z" style="fill:rgb(235,235,235);"/>
+    </g>
+    <g transform="matrix(0.883883,0.883883,-0.791421,0.791421,49.796311,-29.345824)">
+        <path d="M45,0C49.415,0 53,4.003 53,8.935L53,91.065C53,95.997 49.415,100 45,100C40.585,100 37,95.997 37,91.065L37,8.935C37,4.003 40.585,0 45,0Z" style="fill:rgb(235,235,235);"/>
+    </g>
+    <g transform="matrix(0,1.25,-0.95,0,97.5,-6.25)">
+        <path d="M45,0C49.415,0 53,4.717 53,10.526L53,89.474C53,95.283 49.415,100 45,100C40.585,100 37,95.283 37,89.474L37,10.526C37,4.717 40.585,0 45,0Z" style="fill:rgb(235,235,235);"/>
+    </g>
+    <g transform="matrix(-0.883883,0.883883,-0.808579,-0.808579,130.203689,50.654176)">
+        <path d="M45,0C49.415,0 53,3.919 53,8.745L53,91.255C53,96.081 49.415,100 45,100C40.585,100 37,96.081 37,91.255L37,8.745C37,3.919 40.585,0 45,0Z" style="fill:rgb(235,235,235);"/>
     </g>
 </svg>
