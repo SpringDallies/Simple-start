@@ -1,4 +1,4 @@
-# Helium x SimplePage Unified Start Page
+# SimplePage
 
 A sleek, single-page browser start dashboard blending Helium's elegant, 3D dithered logo with SimplePage's link management, favicon pipeline, and minimalist settings.
 
