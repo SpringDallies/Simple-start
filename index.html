@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A minimalist Helium start page with a SimplePage link list, favicon cache and settings window.">
+    <meta name="theme-color" content="#152671">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src https:; object-src 'none'; frame-src 'none';">
+    <title>Helium New Page</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/js/lenis.min.js" as="script">
+    <link rel="preload" href="assets/js/config.js" as="script">
+    <link rel="preload" href="assets/js/app.js" as="script">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <!-- SimplePage zone: settings trigger + square charcoal window -->
+    <div id="settings" class="settings">
+        <button id="settings-btn" class="settings-btn" type="button" aria-expanded="false"
+            aria-controls="window">settings</button>
+
+        <div id="window" hidden>
+            <div class="panel" role="region" aria-label="Settings" data-lenis-prevent>
+                <!-- 1. THEME SECTION -->
+                <section class="group" id="sec-theme" aria-labelledby="group-theme">
+                    <div class="group-header" data-toggle-group="theme">
+                        <h2 id="group-theme" class="group-title">theme</h2>
+                        <div class="group-header-actions">
+                            <button type="button" id="theme-view-btn" class="mini-btn" title="Toggle grid / dropdown view">grid</button>
+                            <button type="button" class="group-toggle-btn" aria-expanded="true" aria-label="Toggle theme section">
+                                <span class="toggle-symbol">−</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="group-body">
+                        <select id="theme-select" class="retro-select" aria-label="Theme dropdown">
+                            <option value="indigo">indigo (default)</option>
+                            <option value="obsidian">obsidian</option>
+                            <option value="emerald">emerald</option>
+                            <option value="crimson">crimson</option>
+                            <option value="amber">amber</option>
+                            <option value="violet">violet</option>
+                            <option value="cyberpunk">cyberpunk</option>
+                            <option value="dracula">dracula</option>
+                            <option value="nord">nord</option>
+                            <option value="solarized">solarized</option>
+                            <option value="tokyo">tokyo night</option>
+                            <option value="gruvbox">gruvbox</option>
+                            <option value="monochrome">monochrome</option>
+                            <option value="c64">c64</option>
+                        </select>
+                        <div class="segmented theme-grid" role="group" aria-labelledby="group-theme">
+                            <button type="button" data-theme="indigo">indigo</button>
+                            <button type="button" data-theme="obsidian">obsidian</button>
+                            <button type="button" data-theme="emerald">emerald</button>
+                            <button type="button" data-theme="crimson">crimson</button>
+                            <button type="button" data-theme="amber">amber</button>
+                            <button type="button" data-theme="violet">violet</button>
+                            <button type="button" data-theme="cyberpunk">cyberpunk</button>
+                            <button type="button" data-theme="dracula">dracula</button>
+                            <button type="button" data-theme="nord">nord</button>
+                            <button type="button" data-theme="solarized">solarized</button>
+                            <button type="button" data-theme="tokyo">tokyo</button>
+                            <button type="button" data-theme="gruvbox">gruvbox</button>
+                            <button type="button" data-theme="monochrome">monochrome</button>
+                            <button type="button" data-theme="c64">c64</button>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <!-- 2. DISPLAY SECTION -->
+                <section class="group" id="sec-display" aria-labelledby="group-display">
+                    <div class="group-header" data-toggle-group="display">
+                        <h2 id="group-display" class="group-title">display</h2>
+                        <button type="button" class="group-toggle-btn" aria-expanded="true" aria-label="Toggle display section">
+                            <span class="toggle-symbol">−</span>
+                        </button>
+                    </div>
+                    <div class="group-body">
+                        <div class="toggle">
+                            <label for="opt-icons">Show icons</label>
+                            <input type="checkbox" class="check" id="opt-icons" data-setting="icons">
+                        </div>
+                        <div class="toggle">
+                            <label for="opt-row">Horizontal layout</label>
+                            <input type="checkbox" class="check" id="opt-row" data-setting="row">
+                        </div>
+                        <div class="toggle">
+                            <label for="opt-hide-clock">Hide clock</label>
+                            <input type="checkbox" class="check" id="opt-hide-clock" data-setting="hideClock">
+                        </div>
+                        <div class="toggle">
+                            <label for="opt-hide-date">Hide date</label>
+                            <input type="checkbox" class="check" id="opt-hide-date" data-setting="hideDate">
+                        </div>
+                        <div class="toggle">
+                            <label for="opt-hide-separator">Hide separator</label>
+                            <input type="checkbox" class="check" id="opt-hide-separator" data-setting="hideSeparator">
+                        </div>
+                        <div class="toggle">
+                            <label for="opt-hide-links">Hide links</label>
+                            <input type="checkbox" class="check" id="opt-hide-links" data-setting="hideLinks">
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-align">Text align</span>
+                            <div class="segmented" role="group" aria-labelledby="label-align">
+                                <button type="button" id="align-left" data-key="align" data-value="left">left</button>
+                                <button type="button" id="align-center" data-key="align" data-value="center">center</button>
+                                <button type="button" id="align-right" data-key="align" data-value="right">right</button>
+                            </div>
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-icon-align">Icon align</span>
+                            <div class="segmented" role="group" aria-labelledby="label-icon-align">
+                                <button type="button" id="icon-align-text" data-key="iconAlign" data-value="text">with text</button>
+                                <button type="button" id="icon-align-left" data-key="iconAlign" data-value="left">left</button>
+                                <button type="button" id="icon-align-right" data-key="iconAlign" data-value="right">right</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <!-- 3. HOVER UNDERLINE CUSTOMIZATION -->
+                <section class="group" id="sec-underline" aria-labelledby="group-underline">
+                    <div class="group-header" data-toggle-group="underline">
+                        <h2 id="group-underline" class="group-title">hover underline</h2>
+                        <button type="button" class="group-toggle-btn" aria-expanded="true" aria-label="Toggle underline section">
+                            <span class="toggle-symbol">−</span>
+                        </button>
+                    </div>
+                    <div class="group-body">
+                        <div class="toggle stack">
+                            <span id="label-underline-style">Style</span>
+                            <div class="segmented" role="group" aria-labelledby="label-underline-style">
+                                <button type="button" data-key="underlineStyle" data-value="dither">dither</button>
+                                <button type="button" data-key="underlineStyle" data-value="solid">solid</button>
+                                <button type="button" data-key="underlineStyle" data-value="dashed">dashed</button>
+                                <button type="button" data-key="underlineStyle" data-value="dotted">dotted</button>
+                                <button type="button" data-key="underlineStyle" data-value="double">double</button>
+                                <button type="button" data-key="underlineStyle" data-value="none">none</button>
+                            </div>
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-underline-dir">Direction</span>
+                            <div class="segmented" role="group" aria-labelledby="label-underline-dir">
+                                <button type="button" data-key="underlineDir" data-value="center">center</button>
+                                <button type="button" data-key="underlineDir" data-value="left">left</button>
+                                <button type="button" data-key="underlineDir" data-value="right">right</button>
+                                <button type="button" data-key="underlineDir" data-value="instant">instant</button>
+                            </div>
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-underline-speed">Speed</span>
+                            <div class="segmented" role="group" aria-labelledby="label-underline-speed">
+                                <button type="button" data-key="underlineSpeed" data-value="fast">fast</button>
+                                <button type="button" data-key="underlineSpeed" data-value="normal">normal</button>
+                                <button type="button" data-key="underlineSpeed" data-value="smooth">smooth</button>
+                                <button type="button" data-key="underlineSpeed" data-value="instant">0s</button>
+                            </div>
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-underline-gap">Line gap</span>
+                            <div class="segmented" role="group" aria-labelledby="label-underline-gap">
+                                <button type="button" data-key="underlineGap" data-value="tight">1px</button>
+                                <button type="button" data-key="underlineGap" data-value="normal">3px</button>
+                                <button type="button" data-key="underlineGap" data-value="loose">5px</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <!-- 4. CLOCK & TIME VARIANTS -->
+                <section class="group" id="sec-clock" aria-labelledby="group-clock">
+                    <div class="group-header" data-toggle-group="clock">
+                        <h2 id="group-clock" class="group-title">clock &amp; time</h2>
+                        <button type="button" class="group-toggle-btn" aria-expanded="true" aria-label="Toggle clock section">
+                            <span class="toggle-symbol">−</span>
+                        </button>
+                    </div>
+                    <div class="group-body">
+                        <div class="toggle stack">
+                            <span id="label-time-format">Time format</span>
+                            <div class="segmented" role="group" aria-labelledby="label-time-format">
+                                <button type="button" data-key="timeFormat" data-value="24h">24h</button>
+                                <button type="button" data-key="timeFormat" data-value="12h">12h (am/pm)</button>
+                                <button type="button" data-key="timeFormat" data-value="12h-noam">12h</button>
+                            </div>
+                        </div>
+                        <div class="toggle">
+                            <label for="opt-seconds">Show seconds</label>
+                            <input type="checkbox" class="check" id="opt-seconds" data-setting="showSeconds">
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-clock-style">Time font style</span>
+                            <div class="segmented" role="group" aria-labelledby="label-clock-style">
+                                <button type="button" data-key="clockStyle" data-value="sans">sans</button>
+                                <button type="button" data-key="clockStyle" data-value="mono">mono</button>
+                                <button type="button" data-key="clockStyle" data-value="dither">dither</button>
+                            </div>
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-date-style">Date font style</span>
+                            <div class="segmented" role="group" aria-labelledby="label-date-style">
+                                <button type="button" data-key="dateStyle" data-value="sans">sans</button>
+                                <button type="button" data-key="dateStyle" data-value="mono">mono</button>
+                                <button type="button" data-key="dateStyle" data-value="dither">dither</button>
+                            </div>
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-clock-size">Clock size</span>
+                            <div class="segmented" role="group" aria-labelledby="label-clock-size">
+                                <button type="button" data-key="clockSize" data-value="compact">compact</button>
+                                <button type="button" data-key="clockSize" data-value="normal">normal</button>
+                                <button type="button" data-key="clockSize" data-value="giant">giant</button>
+                            </div>
+                        </div>
+                        <div class="toggle stack">
+                            <span id="label-date-format">Date format</span>
+                            <div class="segmented" role="group" aria-labelledby="label-date-format">
+                                <button type="button" data-key="dateFormat" data-value="full">full</button>
+                                <button type="button" data-key="dateFormat" data-value="short">short</button>
+                                <button type="button" data-key="dateFormat" data-value="iso">iso</button>
+                                <button type="button" data-key="dateFormat" data-value="retro">retro</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <!-- 5. LINKS SECTION -->
+                <section class="group" id="sec-links" aria-labelledby="group-links">
+                    <div class="group-header" data-toggle-group="links">
+                        <h2 id="group-links" class="group-title">links</h2>
+                        <button type="button" class="group-toggle-btn" aria-expanded="true" aria-label="Toggle links section">
+                            <span class="toggle-symbol">−</span>
+                        </button>
+                    </div>
+                    <div class="group-body">
+                        <div class="toggle">
+                            <label for="opt-edit">Edit links (show &times;)</label>
+                            <input type="checkbox" class="check" id="opt-edit">
+                        </div>
+                        <form id="add-form" class="add-form" autocomplete="off">
+                            <input type="text" id="add-name" name="name" placeholder="Name (optional)" aria-label="Site name">
+                            <input type="text" id="add-url" name="url" placeholder="example.com" inputmode="url" required
+                                aria-label="Site address">
+                            <div class="segmented">
+                                <button type="submit" id="add-site">add site</button>
+                                <button type="button" id="reset-sites">reset links</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Helium zone: dither logo, clock, then the links on the same stage -->
+    <main class="stage">
+        <div class="logo-wrap">
+            <canvas id="app-3d" aria-hidden="true"></canvas>
+        </div>
+
+        <div class="clock-block">
+            <h1 id="clock">00:00</h1>
+            <p id="date">Monday, January 1</p>
+        </div>
+
+        <!-- dithered seam: hands the stage over from Helium's sans to SimplePage's mono -->
+        <div class="seam" aria-hidden="true"></div>
+
+        <nav id="link-container" class="link-container" aria-label="Links"></nav>
+    </main>
+
+    <script src="assets/js/lenis.min.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
