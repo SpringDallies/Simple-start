@@ -28,7 +28,7 @@ window.CONFIG = {
         { name: 'Forums', url: 'https://cracked.st/' },
         { name: 'Anime', url: 'https://reanime.to/' },
         { name: 'Pinterest', url: 'https://in.pinterest.com/' },
-        { name: 'Fmhy', url: 'https://fmhy.net', icon: 'assets/icons/fmhy.png' },
+        { name: 'Fmhy', url: 'https://fmhy.net', icon: 'fmhy.png' },
         { name: 'Linux', url: 'https://archive.org/details/native-linux-games-collection?tab=collection' },
         { name: 'Cobalt', url: 'https://cobalt.meowing.de/' }
     ],
