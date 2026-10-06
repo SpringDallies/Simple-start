@@ -36,7 +36,6 @@ ps: i dont have the funding to publish this to the chromewebstore, so you gotta 
 
 ---
 
-
 ## Settings
 
 The settings button sits in the top-right corner and opens a compact control panel.
@@ -77,16 +76,16 @@ helium-simplepage/
 
 ### Main files
 
-**`index.html`**  
+**`index.html`**
 Contains the page structure and UI elements.
 
-**`style.css`**  
+**`style.css`**
 Handles the layout, typography, gradients, animations, settings panel, and responsive styling.
 
-**`config.js`**  
+**`config.js`**
 Contains the default configuration and link settings.
 
-**`app.js`**  
+**`app.js`**
 Handles the clock, links, favicon system, settings, WebGL logo, local storage, and other interactive features.
 
 ---
@@ -105,4 +104,4 @@ Its simple as fuck!!  -me
 
 ## License
 
-See the repository for licensing information and attribution.
+This project is licensed under the [MIT License](LICENSE).
