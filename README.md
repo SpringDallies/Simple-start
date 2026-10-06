@@ -54,6 +54,16 @@ Settings are stored locally, so your configuration stays around when you reopen 
 
 ---
 
+## Privacy
+
+SimpleStart does not collect, transmit, or store personal data on a server.
+
+The app stores your settings locally in the browser using `LocalStorage` only. This data is kept on your device and is not shared with us or any third party.
+
+If you use the extension, your links and configuration remain in your browser unless you delete them.
+
+---
+
 ## Project Structure
 
 ```text
