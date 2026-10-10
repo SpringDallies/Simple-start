@@ -12,9 +12,12 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preload" href="instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="lenis.min.js" as="script">
+    <link rel="preload" href="critical.js" as="script">
     <link rel="preload" href="config.js" as="script">
     <link rel="preload" href="app.js" as="script">
+    <!-- Configuration and critical tokens stamp synchronously in head before first paint -->
+    <script src="config.js"></script>
+    <script src="critical.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -274,8 +277,8 @@
         </div>
 
         <div class="clock-block">
-            <h1 id="clock">00:00</h1>
-            <p id="date">Monday, January 1</p>
+            <h1 id="clock"></h1>
+            <p id="date"></p>
         </div>
 
         <!-- dithered seam: hands the stage over from Helium's sans to SimplePage's mono -->
@@ -284,9 +287,10 @@
         <nav id="link-container" class="link-container" aria-label="Links"></nav>
     </main>
 
-    <script src="lenis.min.js"></script>
-    <script src="config.js"></script>
+    <!-- Phase 2: Renders clock, date, links, and logo canvas frame 1 synchronously before first paint -->
+    <script src="critical.js"></script>
     <script src="app.js"></script>
+    <script src="lenis.min.js" defer></script>
 </body>
 
 </html>

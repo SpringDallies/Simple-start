@@ -125,87 +125,28 @@ const getSavedTheme = () => {
     const saved = SafeStorage.get('theme', `"${fallback}"`);
     return THEMES[saved] ? saved : 'indigo';
 };
+
+/* critical.js already stamped data-theme; just sync the meta tag here */
 const savedTheme = getSavedTheme();
-root.dataset.theme = savedTheme;
 const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 if (metaThemeColor && THEMES[savedTheme]) {
     metaThemeColor.setAttribute('content', THEMES[savedTheme].themeColor);
 }
 
-/* Instantly apply saved layout attributes to root to prevent flash of unstyled layout */
-const getInitialLayoutSettings = () => {
-    const DEFAULTS = Object.assign(
-        {
-            icons: true,
-            row: true,
-            align: 'left',
-            iconAlign: 'text',
-            hideClock: false,
-            hideDate: false,
-            hideSeparator: false,
-            hideLinks: false,
-            themeView: 'grid',
-            underlineStyle: 'dither',
-            underlineDir: 'center',
-            underlineSpeed: 'normal',
-            underlineGap: 'normal',
-            timeFormat: '24h',
-            showSeconds: false,
-            clockStyle: 'sans',
-            dateStyle: 'sans',
-            clockSize: 'normal',
-            dateFormat: 'full'
-        },
-        (window.CONFIG && window.CONFIG.layout) || {}
-    );
-    return Object.assign({}, DEFAULTS, SafeStorage.get('settings', '{}'));
-};
-const initialLayout = getInitialLayoutSettings();
-root.dataset.icons = initialLayout.icons;
-root.dataset.row = initialLayout.row;
-root.dataset.align = initialLayout.align;
-root.dataset.iconAlign = initialLayout.iconAlign;
-root.dataset.hideClock = initialLayout.hideClock;
-root.dataset.hideDate = initialLayout.hideDate;
-root.dataset.hideSeparator = initialLayout.hideSeparator;
-root.dataset.hideLinks = initialLayout.hideLinks;
-root.dataset.themeView = initialLayout.themeView === 'dropdown' ? 'dropdown' : 'grid';
-root.dataset.underlineStyle = initialLayout.underlineStyle || 'dither';
-root.dataset.underlineDir = initialLayout.underlineDir || 'center';
-root.dataset.underlineSpeed = initialLayout.underlineSpeed || 'normal';
-root.dataset.underlineGap = initialLayout.underlineGap || 'normal';
-root.dataset.timeFormat = initialLayout.timeFormat || '24h';
-root.dataset.showSeconds = initialLayout.showSeconds ? 'true' : 'false';
-root.dataset.clockStyle = initialLayout.clockStyle || 'sans';
-root.dataset.dateStyle = initialLayout.dateStyle || 'sans';
-root.dataset.clockSize = initialLayout.clockSize || 'normal';
-root.dataset.dateFormat = initialLayout.dateFormat || 'full';
-
 /* ------------------------------------------------------------
    Session Lifecycle & Instant Startup Continuity
-   - Cold boot / restart (F5, browser restart, idle > 15m):
-       Plays entrance pop-in from scale 0 -> 1 and gentle fade-up.
-   - Ongoing active session (opening new tabs, normal browsing):
-       Instantaneous startup (0ms delay, scale 1.0, continues rotation
-       seamlessly from where it left off).
+   - data-session is already set by critical.js
+   - Here we only manage the rotation anchor and heartbeat
    ------------------------------------------------------------ */
 const SESSION_TIMEOUT_MS = 15 * 60 * 1000;
 const nowTime = Date.now();
-const lastActive = Number(SafeStorage.get('last_active_time', '0'));
-const navEntry = (window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation')[0]);
-const isReload = navEntry ? navEntry.type === 'reload' : false;
-
-// New session if idle timeout exceeded, no history, or page reload
-const isNewSession = !lastActive || (nowTime - lastActive > SESSION_TIMEOUT_MS) || isReload;
+const isNewSession = root.dataset.session === 'new';
 
 let rotationAnchor = Number(SafeStorage.get('rotation_anchor', '0'));
 if (isNewSession || !rotationAnchor) {
     rotationAnchor = nowTime;
     SafeStorage.set('rotation_anchor', rotationAnchor);
 }
-
-// Drive CSS entrance animations conditionally
-root.dataset.session = isNewSession ? 'new' : 'active';
 
 // Cross-tab session heartbeat
 const pingSession = () => SafeStorage.set('last_active_time', Date.now());
@@ -226,6 +167,26 @@ window.setLogoColors = (shadow, highlight) => {};
 const initLogo = () => {
     const canvas = document.getElementById('app-3d');
     if (!canvas) return;
+
+    if (window.__heliumLogo) {
+        window.setLogoColors = (shadow, highlight, immediate = false) => {
+            window.__heliumLogo.setColors(shadow, highlight, immediate);
+        };
+        let running = true;
+        const loop = () => {
+            if (!running) return;
+            window.__heliumLogo.draw();
+            requestAnimationFrame(loop);
+        };
+        requestAnimationFrame(loop);
+
+        document.addEventListener('visibilitychange', () => {
+            const wasPaused = !running;
+            running = !document.hidden;
+            if (wasPaused && running) requestAnimationFrame(loop);
+        });
+        return;
+    }
 
     const gl = canvas.getContext('webgl', {
         alpha: true,
@@ -960,7 +921,9 @@ const initSettings = () => {
    ------------------------------------------------------------ */
 const initLenis = () => {
     if (typeof Lenis === 'undefined') {
-        console.warn('[Lenis] Library not detected, falling back to native scroll.');
+        window.addEventListener('load', () => {
+            if (typeof Lenis !== 'undefined') initLenis();
+        }, { once: true });
         return;
     }
 
